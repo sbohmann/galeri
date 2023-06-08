@@ -9,6 +9,7 @@ a {
   color: #00B7FF;
 }
 
-img {
-  margin: 20px;
+image {
+  display: block;
+  margin: 200px;
 }
