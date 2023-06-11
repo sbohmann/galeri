@@ -3,11 +3,7 @@ let router = express.Router()
 let fs = require('fs')
 
 router.get('/', function(request, response) {
-  response.render('index', { images: readImages() });
+  response.render('index');
 })
-
-function readImages() {
-  return fs.readdirSync('public/images')
-}
 
 module.exports = router
