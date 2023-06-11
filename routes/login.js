@@ -4,30 +4,30 @@ const implementation = require('../implementation/core.js')
 
 let delayForUserName = new Map()
 
-router.get('/', function (req, res) {
-    res.render('login', {
+router.get('/', function (request, response) {
+    response.render('login', {
         title: "Login"
     })
 })
 
-router.post('/', function (req, res) {
-    let userName = req.body.user
+router.post('/', function (request, response) {
+    let userName = request.body.user
     if (!Number.isInteger(delayForUserName.get(userName))) {
         delayForUserName.set(userName, 0)
     }
     let success = (userId) => {
         delayForUserName.set(userName, 0)
-        req.session.userId = userId
-        res.status(302)
-        res.set('Location', '/')
-        res.send()
+        request.session.userId = userId
+        response.status(302)
+        response.set('Location', '/')
+        response.send()
     }
     let failure = () => {
         delayForUserName.set(userName, delayForUserName.get(userName) + 1)
         console.log("Login failed for user [" + userName + "]")
-        res.status(302)
-        res.set('Location', '/login')
-        res.send()
+        response.status(302)
+        response.set('Location', '/login')
+        response.send()
     }
     let loginDelay = delayForUserName.get(userName)
     if (loginDelay > 0) {
@@ -36,7 +36,7 @@ router.post('/', function (req, res) {
     setTimeout(login,
         1000 * loginDelay,
         userName,
-        req.body.password,
+        request.body.password,
         success,
         failure)
 })

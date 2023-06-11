@@ -1,4 +1,5 @@
 const crypto = require("crypto");
+const loginData = require('./login.js')
 
 exports.configuration = {
     get sessionSecret() {
@@ -12,9 +13,10 @@ exports.configuration = {
 }
 
 exports.login = function(userName, password) {
-    // TODO (project) implement actual login
-    if (userName === "example_user" && password === 'example_password') {
-        // returning example user ID for successful login
-        return 1
+    const result = loginData.forUserName(userName)
+    if (result && result.passwordMatches(password)) {
+        return result.userId
+    } else {
+        return undefined
     }
 }

@@ -2,8 +2,8 @@ let express = require('express');
 let router = express.Router();
 let fs = require('fs')
 
-router.get('/', function(req, res, next) {
-  res.render('index', { images: readImages() });
+router.get('/', function(request, response, next) {
+  response.render('index', { images: readImages() });
 });
 
 function readImages() {

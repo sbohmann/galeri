@@ -2,6 +2,9 @@ extends layout
 
 block content
   h1 galeri
+  p
+    a(href="upload")
+      | upload
   each image in images
     image
       img(src='images/' + image)
