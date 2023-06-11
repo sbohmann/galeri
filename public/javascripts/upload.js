@@ -9,7 +9,6 @@ window.onload = function () {
     function startUpload(fileList) {
         let files = new Array(...fileList)
         let catalog = {
-            length: files.length,
             fileNames: []
         }
         let fileNames = files.map(file => file.name)
@@ -26,6 +25,9 @@ window.onload = function () {
                 name: fileName
             })
         }
+        if (catalog.fileNames.length !== files.length) {
+            throw new RangeError()
+        }
         let options = {
             method: 'POST',
             headers: {
@@ -37,7 +39,9 @@ window.onload = function () {
             .then(response => {
                 if (response.ok) {
                     response.text()
-                        .then(uploadId => uploadFiles(files, uploadId))
+                        .then(uploadId => {
+                            uploadFiles(files, uploadId)
+                        })
                 } else {
                     alert("Failed to upload catalog")
                 }
@@ -51,17 +55,18 @@ window.onload = function () {
 
         function uploadFile() {
             if (index >= files.length) {
+                alert("Successfully uploaded " + files.length + " files.")
                 return
             }
-            let file = files[index++]
+            let fileIndex = index++
+            let file = files[fileIndex]
             let options = {
                 method: 'POST',
                 body: file
             }
-            fetch("/upload/file", options)
+            fetch(`/upload/file/${uploadId}/${fileIndex}`, options)
                 .then(response => {
                     if (response.ok) {
-                        alert('Successfully uploaded file of size ' + file.size)
                         uploadFile(file)
                     }
                 })
