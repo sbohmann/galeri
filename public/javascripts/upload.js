@@ -3,10 +3,24 @@ window.onload = function() {
     const uploadButton = document.getElementById('uploadButton')
 
     uploadButton.onclick = function() {
-        for (let file of fileSelection.files) {
+        uploadFile(fileSelection.files)
+    }
+
+    function uploadFile(fileList) {
+        let files = new Array(...fileList)
+        let file = files.pop()
+        if (file) {
             let reader = new FileReader()
             reader.onload = () => {
-                console.log(reader.result)
+                let options = {
+                    method: "POST",
+                    body: file
+                }
+                fetch("/upload", options)
+                    .then(() => {
+                        alert('Successfully uploaded file of size ' + reader.result.length)
+                        uploadFile(files)
+                    })
             }
             reader.readAsArrayBuffer(file)
         }
