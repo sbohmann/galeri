@@ -7,6 +7,7 @@ const logger = require('morgan');
 
 const loginRouter = require('./routes/login')
 const indexRouter = require('./routes/index');
+const uploadRouter = require('./routes/upload')
 
 const implementation = require('./implementation/core.js')
 
@@ -48,6 +49,7 @@ app.use(function (request, response, next) {
 })
 
 app.use('/', indexRouter);
+app.use('/upload', uploadRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
@@ -55,7 +57,7 @@ app.use(function(request, response, next) {
 });
 
 // error handler
-app.use(function(err, request, response, next) {
+app.use(function(err, request, response) {
   // set locals, only providing error in development
   response.locals.message = err.message;
   response.locals.error = request.app.get('env') === 'development' ? err : {};
