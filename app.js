@@ -32,6 +32,8 @@ app.use(session({
 
 app.use('/login', loginRouter)
 
+app.use('/', indexRouter);
+
 app.use(function (request, response, next) {
   let userId = request.session.userId
   if (userId === undefined) { // TODO path-based permission checks, should be optional
@@ -47,8 +49,6 @@ app.use(function (request, response, next) {
     next()
   }
 })
-
-app.use('/', indexRouter);
 app.use('/upload', uploadRouter)
 
 // catch 404 and forward to error handler
