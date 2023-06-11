@@ -8,7 +8,12 @@ router.get('/', function (request, response) {
     })
 })
 
-router.post('/', function (request, response) {
+router.post('/catalog', function (request, response) {
+    console.log(request.body)
+    response.send()
+})
+
+router.post('/file', function (request, response) {
     request
         .on('data', data => {
             console.log(data)

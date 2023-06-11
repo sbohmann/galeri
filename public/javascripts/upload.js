@@ -1,28 +1,70 @@
-window.onload = function() {
+window.onload = function () {
     const fileSelection = document.getElementById('fileSelection')
     const uploadButton = document.getElementById('uploadButton')
 
-    uploadButton.onclick = function() {
-        uploadFile(fileSelection.files)
+    uploadButton.onclick = function () {
+        startUpload(fileSelection.files)
     }
 
-    function uploadFile(fileList) {
+    function startUpload(fileList) {
         let files = new Array(...fileList)
-        let file = files.pop()
-        if (file) {
-            let reader = new FileReader()
-            reader.onload = () => {
-                let options = {
-                    method: "POST",
-                    body: file
-                }
-                fetch("/upload", options)
-                    .then(() => {
-                        alert('Successfully uploaded file of size ' + reader.result.length)
-                        uploadFile(files)
-                    })
+        let catalog = {
+            length: files.length,
+            fileNames: []
+        }
+        let fileNames = files.map(file => file.name)
+        let index = 0
+        let names = new Set()
+        for (let fileName of fileNames) {
+            if (names.has(fileName)) {
+                alert("Found duplicate file name [" + fileName + "]")
+                return
             }
-            reader.readAsArrayBuffer(file)
+            names.add(fileName)
+            catalog.fileNames.push({
+                index: index++,
+                name: fileName
+            })
+        }
+        let options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            },
+            body: JSON.stringify(catalog)
+        }
+        fetch("/upload/catalog", options)
+            .then(response => {
+                if (response.ok) {
+                    response.text()
+                        .then(uploadId => uploadFiles(files, uploadId))
+                } else {
+                    alert("Failed to upload catalog")
+                }
+            })
+    }
+
+    function uploadFiles(files, uploadId) {
+        let index = 0
+
+        uploadFile()
+
+        function uploadFile() {
+            if (index >= files.length) {
+                return
+            }
+            let file = files[index++]
+            let options = {
+                method: 'POST',
+                body: file
+            }
+            fetch("/upload/file", options)
+                .then(response => {
+                    if (response.ok) {
+                        alert('Successfully uploaded file of size ' + file.size)
+                        uploadFile(file)
+                    }
+                })
         }
     }
 }
