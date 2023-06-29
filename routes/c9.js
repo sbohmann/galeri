@@ -7,6 +7,12 @@ router.get('/', function (request, response) {
 })
 
 function readImages() {
+    let result = f()
+    console.log(result)
+    return result
+}
+
+function f() {
     let imageDirectory = 'public/images/c9'
     if (fs.existsSync(imageDirectory)) {
         return fs.readdirSync(imageDirectory)
