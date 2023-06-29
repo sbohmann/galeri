@@ -18,7 +18,8 @@ image {
   width: 1024px;
 }
 
-.fullWidth {
+.pageWidth {
+  max-width: 100%;
   left: 0;
   right: 0;
 }
