@@ -2,11 +2,12 @@ const createError = require('http-errors');
 const express = require('express');
 const session = require('express-session')
 const path = require('path');
-const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser')
 const logger = require('morgan');
 
 const loginRouter = require('./routes/login')
-const indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index')
+const c9Router = require('./routes/c9')
 const uploadRouter = require('./routes/upload')
 
 const implementation = require('./implementation/core.js')
@@ -33,6 +34,8 @@ app.use(session({
 app.use('/login', loginRouter)
 
 app.use('/', indexRouter);
+
+app.use('/c9', c9Router);
 
 app.use(function (request, response, next) {
   let userId = request.session.userId
