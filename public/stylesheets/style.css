@@ -13,3 +13,7 @@ image {
   display: block;
   margin: 200px;
 }
+
+.gallery {
+  width: 1024px
+}
