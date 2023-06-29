@@ -15,5 +15,11 @@ image {
 }
 
 .gallery {
-  width: 1024px
+  width: 1024px;
+}
+
+.fullWidth {
+  left: 0;
+  right: 0;
+  width: auto;
 }
