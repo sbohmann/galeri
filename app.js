@@ -8,6 +8,7 @@ const logger = require('morgan');
 const loginRouter = require('./routes/login')
 const indexRouter = require('./routes/index')
 const c9Router = require('./routes/c9')
+const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
 
 const implementation = require('./implementation/core.js')
@@ -36,6 +37,8 @@ app.use('/login', loginRouter)
 app.use('/', indexRouter);
 
 app.use('/c9', c9Router);
+
+app.use('/dashboard', dashboardRouter);
 
 app.use(function (request, response, next) {
   let userId = request.session.userId
