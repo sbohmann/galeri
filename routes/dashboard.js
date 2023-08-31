@@ -4,7 +4,8 @@ let router = express.Router()
 router.get('/', function (request, response) {
     response.render('dashboard', {
         title: "Dashboard",
-        scripts: ["dashboard.js"]
+        scripts: ["dashboard.js"],
+        systems: ['alamera']
     });
 })
 
