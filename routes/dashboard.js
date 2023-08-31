@@ -3,7 +3,8 @@ let router = express.Router()
 
 router.get('/', function (request, response) {
     response.render('dashboard', {
-        title: "Dashboard"
+        title: "Dashboard",
+        scripts: ["dashboard.js"]
     });
 })
 
