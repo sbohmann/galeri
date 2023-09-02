@@ -23,3 +23,11 @@ image {
   left: 0;
   right: 0;
 }
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
