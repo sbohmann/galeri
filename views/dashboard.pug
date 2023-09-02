@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1 Dashboard
+  h2#timelabel
   h2 System Status
    each system in systems
     div.system_status(id=system.id)
