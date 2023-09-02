@@ -16,12 +16,14 @@ function initialize() {
                         let system = systems[systemName]
                         let systemViewId = 'system_' + systemName; //TODO normalize system name
                         let systemStatusLabelId = 'system_' + systemName + '_status';
+                        let systemStatusUpdatedLabelId = 'system_' + systemName + '_status_update';
                         let systemView = document.getElementById(systemViewId)
                         let systemStatusLabel
+                        let systemStatusUpdatedLabel
                         if (systemView) {
                             systemStatusLabel = document.getElementById(systemStatusLabelId)
+                            systemStatusUpdatedLabel = document.getElementById(systemStatusUpdatedLabelId)
                         } else {
-                            let systemsView = document.getElementById('systems')
                             systemView = document.createElement('div')
                             systemView.id = systemViewId
                             let systemNameLabel = document.createElement('h3')
@@ -30,16 +32,20 @@ function initialize() {
                             systemStatusLabel = document.createElement('h1')
                             systemStatusLabel.id = systemStatusLabelId
                             systemView.appendChild(systemStatusLabel)
+                            systemStatusUpdatedLabel = document.createElement('h3')
+                            systemStatusUpdatedLabel.id = systemStatusUpdatedLabelId
+                            systemView.appendChild(systemStatusUpdatedLabel)
                             systemsView.appendChild(systemView)
                         }
-                        systemStatusLabel.textContent = system.status
-                        if (system.status === 'OK') {
+                        systemStatusLabel.textContent = system.state
+                        if (system.state === 'OK') {
                             systemStatusLabel.classList.remove('red')
                             systemStatusLabel.classList.add('green')
                         } else {
                             systemStatusLabel.classList.remove('green')
                             systemStatusLabel.classList.add('red')
                         }
+                        systemStatusUpdatedLabel.textContent = system.updated
                     }
                 }))
     }
