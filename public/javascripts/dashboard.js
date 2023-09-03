@@ -53,7 +53,7 @@ function initialize() {
                     }
                     for (let displayedSystemName of displayedSystemNames) {
                         if (!newSystemNames.has(displayedSystemName)) {
-                            let removedSystemView = document.get('system_' + displayedSystemName)
+                            let removedSystemView = document.getElementById('system_' + displayedSystemName)
                             if (removedSystemView) {
                                 systemsView.removeChild(removedSystemView)
                             }
