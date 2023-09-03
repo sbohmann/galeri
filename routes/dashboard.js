@@ -39,11 +39,16 @@ router.put('/system/:name/report', function (request, response) {
         response.send()
         return
     }
-    let message = request.body
-    stateForSystem[systemName] = {
-        state: message.state,
-        updated: LocalTime.now(),
-        message: message.message
+    try {
+        let message = request.body
+        stateForSystem[systemName] = {
+            state: message.state,
+            updated: LocalTime.now(),
+            message: message.message
+        }
+    } catch (error) {
+        console.log(error)
+        response.status(500)
     }
     response.send()
 })
