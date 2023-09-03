@@ -40,15 +40,16 @@ router.put('/system/:name/report', function (request, response) {
         return
     }
     try {
-        let message = request.body
-        if (!message.state) {
+        request.body
+        if (!request.body.state) {
+            console.log("Request body:", request.body)
             // noinspection ExceptionCaughtLocallyJS
             throw RangeError("Missing state in request body")
         }
         stateForSystem[systemName] = {
-            state: message.state,
+            state: request.body.state,
             updated: LocalTime.now(),
-            message: message.message
+            message: request.body.message
         }
     } catch (error) {
         console.log(error)
