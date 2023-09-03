@@ -2,14 +2,9 @@ window.onload = initialize
 
 function initialize() {
     let systemsView = document.getElementById('systems')
-    let timeLabel = document.getElementById('timelabel')
     let displayedSystemNames = new Set()
-    timeLabel.textContent = '...'
 
     function update() {
-        fetch('/dashboard/time')
-            .then(response => response.text()
-                .then(text => timeLabel.textContent = text))
         fetch('/dashboard/systems')
             .then(response => response.json()
                 .then(systems => {
@@ -30,6 +25,7 @@ function initialize() {
                         } else {
                             systemView = document.createElement('div')
                             systemView.id = systemViewId
+                            systemView.classList.add('system_view')
                             let systemNameLabel = document.createElement('h3')
                             systemNameLabel.textContent = systemName
                             systemView.appendChild(systemNameLabel)

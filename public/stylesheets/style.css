@@ -31,3 +31,7 @@ image {
 .red {
   color: red;
 }
+
+.system_view {
+  display: inline-block;
+}
