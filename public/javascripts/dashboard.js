@@ -3,6 +3,7 @@ window.onload = initialize
 function initialize() {
     let systemsView = document.getElementById('systems')
     let timeLabel = document.getElementById('timelabel')
+    let displayedSystemNames = new Set()
     timeLabel.textContent = '...'
 
     function update() {
@@ -12,7 +13,10 @@ function initialize() {
         fetch('/dashboard/systems')
             .then(response => response.json()
                 .then(systems => {
+                    let newSystemNames = new Set()
                     for (let systemName of Object.keys(systems)) {
+                        displayedSystemNames.add(systemName)
+                        newSystemNames.add(systemName)
                         let system = systems[systemName]
                         let systemViewId = 'system_' + systemName; //TODO normalize system name
                         let systemStatusLabelId = 'system_' + systemName + '_status';
@@ -46,6 +50,14 @@ function initialize() {
                             systemStatusLabel.classList.add('red')
                         }
                         systemStatusUpdatedLabel.textContent = system.updated
+                    }
+                    for (let displayedSystemName of displayedSystemNames) {
+                        if (!newSystemNames.has(displayedSystemName)) {
+                            let removedSystemView = document.get('system_' + displayedSystemName)
+                            if (removedSystemView) {
+                                systemsView.removeChild(removedSystemView)
+                            }
+                        }
                     }
                 }))
     }
