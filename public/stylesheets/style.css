@@ -34,4 +34,5 @@ image {
 
 .system_view {
   display: inline-block;
+  margin: 10px;
 }
