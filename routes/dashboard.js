@@ -16,7 +16,15 @@ let stateForSystem = {}
 
 function tokenIsCorrect(systemName, token) {
     let correctToken = tokenForSystem.get(systemName)
-    return (correctToken && correctToken.length > 0 && token === correctToken)
+    if (!correctToken || correctToken.length === 0) {
+        console.log("Missing or empty token for system name", systemName)
+        return false
+    }
+    if (token !== correctToken) {
+        console.log("Token mismatch for system name", systemName)
+        return false
+    }
+    return true
 }
 
 router.get('/', function (request, response) {
@@ -36,7 +44,7 @@ router.put('/system/:name/report', function (request, response) {
     let token = request.query.token
     if (!tokenIsCorrect(systemName, token)) {
         response.status(401)
-        response.send()
+        response.send("Missing or incorrect token")
         return
     }
     try {
