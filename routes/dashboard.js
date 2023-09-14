@@ -1,5 +1,6 @@
 const fs = require("fs");
-const {LocalTime} = require('js-joda')
+const {LocalTime, Instant} = require('js-joda')
+const {notify} = require('../notifications/notifications.js')
 
 let express = require('express')
 let router = express.Router()
@@ -55,20 +56,33 @@ router.put('/system/:name/report', function (request, response) {
             response.send()
             return
         }
+        let systemState = request.body.state;
         stateForSystem[systemName] = {
-            state: request.body.state,
+            state: systemState,
             updated: LocalTime.now(),
+            updateInstant: Instant.now(),
             message: request.body.message
+        }
+        if (systemState !== 'OK') {
+            notify("System [" + systemName + "] state: " + systemState)
         }
     } catch (error) {
         console.log(error)
         response.status(500)
     }
-    response.send()
+    response.end()
 })
 
-router.get('/time', function (request, response) {
-    response.send(LocalTime.now())
-})
+setInterval(checkStates, 60_000)
+
+function checkStates() {
+    for (let systemName in stateForSystem) {
+        let state = stateForSystem[systemName]
+        console.log(state.state)
+        if (Instant.now().isAfter(state.updateInstant.plusMinutes(1))) {
+            notify("System [" + systemName + "] state older than 1 minute")
+        }
+    }
+}
 
 module.exports = router
