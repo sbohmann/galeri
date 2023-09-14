@@ -78,8 +78,8 @@ setInterval(checkStates, 60_000)
 function checkStates() {
     for (let systemName in stateForSystem) {
         let state = stateForSystem[systemName]
-        if (Instant.now().isAfter(state.updateInstant.plusSeconds(60))) {
-            notify("System [" + systemName + "] state older than 1 minute")
+        if (Instant.now().isAfter(state.updateInstant.plusSeconds(420))) {
+            notify("System [" + systemName + "] state older than 7 minutes")
         }
     }
 }
