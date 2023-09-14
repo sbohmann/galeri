@@ -8,7 +8,6 @@ let configuration
 if (fs.existsSync(configurationPath)) {
     configuration = JSON.parse(
         fs.readFileSync(configurationPath, 'utf8'))
-    console.log(configuration)
 }
 
 exports.notify = function (message) {
