@@ -14,8 +14,10 @@ function readImages() {
     if (fs.existsSync(imageDirectory)) {
         return fs.readdirSync(imageDirectory)
             .flatMap(filename => {
-                let stat = fs.statSync(path.join(imageDirectory, filename))
+                let imageFilePath = path.join(imageDirectory, filename);
+                let stat = fs.statSync(imageFilePath)
                 if (stat.isFile) {
+                    console.log(`[${imageFilePath} is a file`)
                     return [{
                         filename,
                         video: isVideo(filename)
