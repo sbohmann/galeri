@@ -11,4 +11,5 @@ block content
           a(href='images/wiesn23/' + image.filename) ⬆️ Save Video
         p
       else
-        img.gallery(src='images/wiesn23/' + image.filename width=256)
+        a(href='images/wiesn23/' + image.filename)
+          img.gallery(src='images/wiesn23/thumbnails/' + image.filename width=256)
