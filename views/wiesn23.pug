@@ -4,4 +4,8 @@ block content
   h1 Wiesn 23
   each image in images
     image
-      img.gallery(src='images/wiesn23/' + image width=1024)
+      if image.video
+        video.gallery(controls width=1024)
+          source(src='images/wiesn23/' + image)
+      else
+        img.gallery(src='images/wiesn23/' + image width=1024)
