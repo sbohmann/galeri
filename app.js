@@ -7,7 +7,10 @@ const logger = require('morgan');
 
 const loginRouter = require('./routes/login')
 const indexRouter = require('./routes/index')
+
 const c9Router = require('./routes/c9')
+const wiesn23Router = require('./routes/wiesn23')
+
 const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
 
@@ -37,6 +40,8 @@ app.use('/login', loginRouter)
 app.use('/', indexRouter);
 
 app.use('/c9', c9Router);
+
+app.use('/wiesn23', wiesn23Router);
 
 app.use('/dashboard', dashboardRouter);
 
