@@ -5,11 +5,11 @@ block content
   each image in images
     div
       if image.video
-        video.gallery(controls poster='images/wiesn23/thumbnails/' + image.filename + '.jpg')
+        video.gallery(controls width=256 poster='images/wiesn23/thumbnails/' + image.filename + '.jpg')
           source(src='images/wiesn23/' + image.filename)
         p
           a(href='images/wiesn23/' + image.filename) ⬆️ Save Video
         p
       else
         a(href='images/wiesn23/' + image.filename)
-          img.gallery(src='images/wiesn23/thumbnails/' + image.filename)
+          img.gallery(src='images/wiesn23/thumbnails/' + image.filename width=256)
