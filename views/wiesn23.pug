@@ -6,6 +6,6 @@ block content
     image
       if image.video
         video.gallery(controls width=1024)
-          source(src='images/wiesn23/' + image)
+          source(src='images/wiesn23/' + image.filename)
       else
-        img.gallery(src='images/wiesn23/' + image width=1024)
+        img.gallery(src='images/wiesn23/' + image.filename width=1024)
