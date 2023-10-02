@@ -7,5 +7,6 @@ block content
       if image.video
         video.gallery(controls width=1024)
           source(src='images/wiesn23/' + image.filename)
+        a(href='images/wiesn23/' + image.filename) ⬆️ Save Video
       else
         img.gallery(src='images/wiesn23/' + image.filename width=1024)
