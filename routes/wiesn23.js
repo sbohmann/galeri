@@ -16,7 +16,7 @@ function readImages() {
             .flatMap(filename => {
                 let imageFilePath = path.join(imageDirectory, filename);
                 let stat = fs.statSync(imageFilePath)
-                if (stat.isFile) {
+                if (stat.isFile && !stat.isDirectory) {
                     console.log(`[${imageFilePath} is a file`)
                     return [{
                         filename,
