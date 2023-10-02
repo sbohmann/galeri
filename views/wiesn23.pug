@@ -3,7 +3,7 @@ extends layout
 block content
   h1 Wiesn 23
   each image in images
-    image
+    div
       if image.video
         video.gallery(controls width=256)
           source(src='images/wiesn23/' + image.filename)
