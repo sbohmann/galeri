@@ -8,7 +8,7 @@ const uploadForId = new Map()
 
 router.get('/', function (request, response) {
     response.render('upload', {
-        title: "Upload",
+        title: "File Upload",
         scripts: ["upload.js"]
     })
 })

@@ -13,6 +13,7 @@ const wiesn23Router = require('./routes/wiesn23')
 
 const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
+const galleryUploadRouter = require('./routes/gallery-upload')
 
 const implementation = require('./implementation/core.js')
 
@@ -62,6 +63,8 @@ app.use(function (request, response, next) {
 })
 
 app.use('/upload', uploadRouter)
+
+app.use('/gallery-upload', galleryUploadRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {

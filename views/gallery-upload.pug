@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    div
+        label Gallery
+            p
+                label
+                    input(type="radio" name="gallery" value="new")
+                    | &nbsp;New Gallery
+            p
+                label Name&nbsp;
+                    input#new-gallery-name(type="text")
+            p
+                label
+                    input(type="radio" name="gallery" value="existing")
+                    | &nbsp;Existing Gallery
+            p
+                | Hi!
+        label Select Files
+            br
+            input#fileSelection(type="file" multiple)
+        button#uploadButton Upload
