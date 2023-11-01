@@ -9,11 +9,11 @@ function buildRouter(name) {
     let router = express.Router()
 
     router.get('/', function (request, response) {
-        response.render(name, {images: readImages()})
+        response.render('gallery', {title: name, images: readImages()})
     })
 
     function readImages() {
-        let imageDirectory = 'public/images/' + name
+        let imageDirectory = 'public/images/galleries/' + name
         if (fs.existsSync(imageDirectory)) {
             return fs.readdirSync(imageDirectory)
                 .flatMap(filename => {
