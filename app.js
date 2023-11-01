@@ -8,8 +8,9 @@ const logger = require('morgan');
 const loginRouter = require('./routes/login')
 const indexRouter = require('./routes/index')
 
-const c9Router = require('./routes/c9')
-const wiesn23Router = require('./routes/wiesn23')
+// const c9Router = require('./routes/c9')
+const c9Router = require('./routes/gallery')('c9')
+const wiesn23Router = require('./routes/gallery')('wiesn23')
 
 const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
