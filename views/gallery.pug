@@ -5,11 +5,11 @@ block content
   each image in images
     div
       if image.video
-        video.gallery(controls width=256 poster='images/gallery/' + title + '/thumbnails/' + image.filename + '.jpg')
-          source(src='images/gallery/' + title + '/' + image.filename)
+        video.gallery(controls width=256 poster='images/galleries/' + title + '/thumbnails/' + image.filename + '.jpg')
+          source(src='images/galleries/' + title + '/' + image.filename)
         br
-        h2: a(href='images/gallery/' + title + '/' + image.filename) ⬆ Video File
+        h2: a(href='images/galleries/' + title + '/' + image.filename) ⬆ Video File
       else
-        a(href='images/gallery/' + title + '/' + image.filename)
-          img.gallery(src='images/gallery/' + title + '/thumbnails/' + image.filename width=256)
+        a(href='images/galleries/' + title + '/' + image.filename)
+          img.gallery(src='images/galleries/' + title + '/thumbnails/' + image.filename width=256)
     p &nbsp;
