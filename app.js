@@ -40,7 +40,7 @@ app.use('/login', loginRouter)
 app.use('/', indexRouter);
 
 fs.readdirSync('./public/images/galleries')
-    .forEach(name => app.use('/' + name, createGalleryRouter('name')))
+    .forEach(name => app.use('/' + name, createGalleryRouter(name)))
 
 app.use('/dashboard', dashboardRouter);
 
