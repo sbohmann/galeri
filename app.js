@@ -4,17 +4,15 @@ const session = require('express-session')
 const path = require('path');
 const cookieParser = require('cookie-parser')
 const logger = require('morgan');
+const fs = require("fs");
 
 const loginRouter = require('./routes/login')
 const indexRouter = require('./routes/index')
 
-// const c9Router = require('./routes/c9')
-const c9Router = require('./routes/gallery')('c9')
-const wiesn23Router = require('./routes/gallery')('wiesn23')
-
 const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
 const galleryUploadRouter = require('./routes/gallery-upload')
+const createGalleryRouter = require('./routes/gallery');
 
 const implementation = require('./implementation/core.js')
 
@@ -41,9 +39,8 @@ app.use('/login', loginRouter)
 
 app.use('/', indexRouter);
 
-app.use('/c9', c9Router);
-
-app.use('/wiesn23', wiesn23Router);
+fs.readdirSync('./pub/images/galleries')
+    .forEach(name => app.use('/' + name, createGalleryRouter('name')))
 
 app.use('/dashboard', dashboardRouter);
 
