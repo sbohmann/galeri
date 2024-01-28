@@ -73,13 +73,37 @@ router.put('/system/:name/report', function (request, response) {
     response.end()
 })
 
+const count = (() => {
+    let countValues = new Map()
+    return {
+        check(system) {
+            let value = countValues.get(system)
+            if (!value) {
+                value = 0
+            } else {
+                value += 1
+                value %= 15
+            }
+            countValues.set(system, value)
+            return (value === 0)
+        },
+        reset(system) {
+            countValues.delete(system)
+        }
+    }
+})()
+
 setInterval(checkStates, 60_000)
 
 function checkStates() {
     for (let systemName in stateForSystem) {
         let state = stateForSystem[systemName]
         if (Instant.now().isAfter(state.updateInstant.plusSeconds(720))) {
-            notify("System [" + systemName + "] state older than 12 minutes")
+            if (count.check(systemName)) {
+                notify("System [" + systemName + "] state older than 12 minutes")
+            }
+        } else {
+            count.reset()
         }
     }
 }
