@@ -107,7 +107,7 @@ function checkStates() {
                 console.log("Not notifying")
             }
         } else {
-            count.reset()
+            count.reset(systemName)
             console.log("Resetting")
         }
     }
