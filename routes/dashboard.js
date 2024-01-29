@@ -85,6 +85,7 @@ const count = (() => {
                 value %= 15
             }
             countValues.set(system, value)
+            console.log("value: " + value)
             return (value === 0)
         },
         reset(system) {
@@ -100,10 +101,14 @@ function checkStates() {
         let state = stateForSystem[systemName]
         if (Instant.now().isAfter(state.updateInstant.plusSeconds(720))) {
             if (count.check(systemName)) {
+                console.log("Notifying")
                 notify("System [" + systemName + "] state older than 12 minutes")
+            } else {
+                console.log("Not notifying")
             }
         } else {
             count.reset()
+            console.log("Resetting")
         }
     }
 }
