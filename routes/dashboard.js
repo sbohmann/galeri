@@ -108,7 +108,6 @@ function checkStates() {
             }
         } else {
             count.reset(systemName)
-            console.log(`Resetting ${systemName}`)
         }
     }
 }
