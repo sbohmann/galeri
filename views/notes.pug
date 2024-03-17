@@ -1,6 +1,10 @@
 extends layout
 
 block content
-  h1 Dashboard
-  h2 System Status
-  systems#systems
+  h1 Notes
+  div
+    form(action="/notes/post" method="POST")
+      input#text-input(type="text" name="text")
+      input(type="submit")
+  each note in notes
+    p=note
