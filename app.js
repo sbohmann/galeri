@@ -13,6 +13,7 @@ const dashboardRouter= require('./routes/dashboard')
 const uploadRouter = require('./routes/upload')
 const galleryUploadRouter = require('./routes/gallery-upload')
 const createGalleryRouter = require('./routes/gallery');
+const notesRouter = require('./routes/notes')
 
 const implementation = require('./implementation/core.js')
 
@@ -48,8 +49,13 @@ app.use(function (request, response, next) {
   let userId = request.session.userId
   if (userId === undefined) { // TODO path-based permission checks, should be optional
     if (request.method === 'GET') {
+      console.log(request.path)
       response.status(302)
       response.set('Location', '/login')
+      if (request.path !== undefined) {
+        response.set('Origin', request.path)
+        response.set('Referer', request.path)
+      }
       response.send()
     } else {
       response.status(401)
@@ -63,6 +69,8 @@ app.use(function (request, response, next) {
 app.use('/upload', uploadRouter)
 
 app.use('/gallery-upload', galleryUploadRouter)
+
+app.use('/notes', notesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {

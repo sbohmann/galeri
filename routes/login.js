@@ -1,16 +1,17 @@
 const express = require('express')
-const router = express.Router()
+const loginRouter = express.Router()
 const implementation = require('../implementation/core.js')
 
 let delayForUserName = new Map()
 
-router.get('/', function (request, response) {
+loginRouter.get('/', function (request, response) {
+    console.log(request.headers)
     response.render('login', {
         title: "Login"
     })
 })
 
-router.post('/', function (request, response) {
+loginRouter.post('/', function (request, response) {
     let userName = request.body.user
     if (!Number.isInteger(delayForUserName.get(userName))) {
         delayForUserName.set(userName, 0)
@@ -51,4 +52,4 @@ function login(userName, password, success, failure) {
     }
 }
 
-module.exports = router
+module.exports = { loginRouter, loginPage }
