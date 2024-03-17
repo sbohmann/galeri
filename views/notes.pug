@@ -7,4 +7,6 @@ block content
       input#text-input(type="text" name="text")
       input(type="submit")
   each note in notes
-    p=note
+    p
+      button(value="📋" onclick="copy(" + note + ")")
+      span=note
