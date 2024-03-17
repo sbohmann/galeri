@@ -8,5 +8,5 @@ block content
       input(type="submit")
   each note in notes
     p
-      button(value="📋" onclick="copy(" + note + ")")
+      button(value="📋" onclick="copy(\" + note + \")")
       span=note
