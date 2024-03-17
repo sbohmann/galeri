@@ -8,9 +8,18 @@ router.get('/', function (request, response) {
     response.render('notes', {
         title: "Notes",
         scripts: ["notes.js"],
-        notes
+        notes: zipWithIndex(notes)
     });
 })
+
+function zipWithIndex(input) {
+    let result = []
+    let index = 0
+    for (let element of input) {
+        result.push({ index: index++, text: element})
+    }
+    return result
+}
 
 router.post('/post', function (request, response) {
     withText(

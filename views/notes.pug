@@ -7,6 +7,8 @@ block content
       input#text-input(type="text" name="text")
       input(type="submit")
   each note in notes
+    p=JSON.stringify(note)
     p
-      button(value="📋" onclick="copy(\" + note + \")")
-      span=note
+      button(value="COPY" onclick="copy(" + note.index + ")")
+      | &nbsp;
+      span(id="note_" + note.index)=note.text
