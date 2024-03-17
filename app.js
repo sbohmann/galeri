@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const logger = require('morgan');
 const fs = require("fs");
 
-const loginRouter = require('./routes/login')
+const { loginRouter, renderLoginPage } = require('./routes/login')
 const indexRouter = require('./routes/index')
 
 const dashboardRouter= require('./routes/dashboard')
@@ -40,8 +40,12 @@ app.use('/login', loginRouter)
 
 app.use('/', indexRouter);
 
-fs.readdirSync('./public/images/galleries')
-    .forEach(name => app.use('/' + name, createGalleryRouter(name)))
+let galleriesPath = './public/images/galleries'
+if (fs.existsSync(galleriesPath))
+{
+  fs.readdirSync(galleriesPath)
+      .forEach(name => app.use('/' + name, createGalleryRouter(name)))
+}
 
 app.use('/dashboard', dashboardRouter);
 
@@ -49,14 +53,7 @@ app.use(function (request, response, next) {
   let userId = request.session.userId
   if (userId === undefined) { // TODO path-based permission checks, should be optional
     if (request.method === 'GET') {
-      console.log(request.path)
-      response.status(302)
-      response.set('Location', '/login')
-      if (request.path !== undefined) {
-        response.set('Origin', request.path)
-        response.set('Referer', request.path)
-      }
-      response.send()
+      renderLoginPage(request, response, request.path)
     } else {
       response.status(401)
       response.send()
@@ -74,6 +71,7 @@ app.use('/notes', notesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
+  console.log("Not found: [" + request.path + "]")
   next(createError(404))
 });
 

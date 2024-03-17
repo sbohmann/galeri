@@ -5,14 +5,23 @@ const implementation = require('../implementation/core.js')
 let delayForUserName = new Map()
 
 loginRouter.get('/', function (request, response) {
+    renderLoginPage(request, response);
+})
+
+function renderLoginPage(request, response, returnPath) {
     console.log(request.headers)
     response.render('login', {
-        title: "Login"
+        title: "Login",
+        returnPath
     })
-})
+}
 
 loginRouter.post('/', function (request, response) {
     let userName = request.body.user
+    console.log(request.body.returnPath)
+    let returnPath = request.body.returnPath === undefined
+        ? '/'
+        : request.body.returnPath
     if (!Number.isInteger(delayForUserName.get(userName))) {
         delayForUserName.set(userName, 0)
     }
@@ -20,7 +29,7 @@ loginRouter.post('/', function (request, response) {
         delayForUserName.set(userName, 0)
         request.session.userId = userId
         response.status(302)
-        response.set('Location', '/')
+        response.set('Location', returnPath)
         response.send()
     }
     let failure = () => {
@@ -52,4 +61,4 @@ function login(userName, password, success, failure) {
     }
 }
 
-module.exports = { loginRouter, loginPage }
+module.exports = { loginRouter, renderLoginPage }
