@@ -29,11 +29,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const secondsPerDay = 24 * 60 * 60 * 1000
 app.use(session({
   secret: implementation.configuration.sessionSecret,
   resave: true,
   saveUninitialized: true,
-  name: 'sessionId'
+  name: 'sessionId',
+  cookie: {
+    maxAge: 90 * secondsPerDay
+  }
 }))
 
 app.use('/login', loginRouter)
