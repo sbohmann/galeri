@@ -13,6 +13,14 @@ if (!fs.existsSync(dataDirectory)) {
     fs.mkdirSync(dataDirectory)
 }
 
+if (fs.existsSync(dataFile)) {
+    // TODO parse the file more efficiently
+    fs.readFileSync(dataFile, 'utf8')
+        .split(/\x02|\x02\x03|\x03/)
+        .filter(text => text.length > 0)
+        .forEach(text => notes.unshift(text))
+}
+
 router.get('/', function (request, response) {
     response.render('notes', {
         title: "Notes",
@@ -35,8 +43,10 @@ router.post('/post', function (request, response) {
         request.body.text,
         rawText => {
             let text = rawText.replace(/[\x00-\x08]/, '')
-            notes.unshift(text)
-            saveNote(text)
+            if (text.length > 0) {
+                notes.unshift(text)
+                saveNote(text)
+            }
         })
     response.status(302)
     response.set('Location', '/notes')
