@@ -1,6 +1,5 @@
 const express = require('express')
 const fs = require('fs')
-const path = require("path");
 
 const videoSuffices = ['mov', 'mp4', 'webm']
     .map(suffix => new RegExp('\\.' + suffix + '$'))
@@ -17,7 +16,7 @@ function buildRouter(name) {
         if (fs.existsSync(imageDirectory)) {
             return fs.readdirSync(imageDirectory)
                 .flatMap(filename => {
-                    let imageFilePath = path.join(imageDirectory, filename);
+                    let imageFilePath = `${imageDirectory}/${filename}`
                     let stat = fs.statSync(imageFilePath)
                     if (stat.isFile()) {
                         console.log(`[${imageFilePath}] is a file`)
