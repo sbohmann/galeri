@@ -14,7 +14,7 @@ if (!fs.existsSync(dataDirectory)) {
 }
 
 if (fs.existsSync(dataFile)) {
-    // TODO parse the file more efficiently
+    // TODO parse the file properly and more efficiently
     fs.readFileSync(dataFile, 'utf8')
         .split(/\x02|\x02\x03|\x03/)
         .filter(text => text.length > 0)
