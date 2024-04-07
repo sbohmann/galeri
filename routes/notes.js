@@ -1,11 +1,13 @@
 let express = require('express')
 const fs = require("fs");
+const path = require("path");
 
 let router = express.Router()
 
 let notes = []
 
 const dataDirectory = 'data'
+const dataFile = path.join(dataDirectory, 'notes')
 
 if (!fs.existsSync(dataDirectory)) {
     fs.mkdirSync(dataDirectory)
@@ -34,6 +36,7 @@ router.post('/post', function (request, response) {
         rawText => {
             let text = rawText.replace(/[\x00-\x08]/, '')
             notes.unshift(text)
+            saveNote(text)
         })
     response.status(302)
     response.set('Location', '/notes')
@@ -48,6 +51,10 @@ function withText(value, action) {
     if (value.length > 0) {
         action(value)
     }
+}
+
+function saveNote(text) {
+    fs.appendFileSync(dataFile, `\x02${text}\x03`, 'utf8')
 }
 
 module.exports = router
