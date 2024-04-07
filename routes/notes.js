@@ -1,8 +1,15 @@
 let express = require('express')
+const fs = require("fs");
 
 let router = express.Router()
 
 let notes = []
+
+const dataDirectory = 'data'
+
+if (!fs.existsSync(dataDirectory)) {
+    fs.mkdirSync(dataDirectory)
+}
 
 router.get('/', function (request, response) {
     response.render('notes', {
@@ -24,7 +31,10 @@ function zipWithIndex(input) {
 router.post('/post', function (request, response) {
     withText(
         request.body.text,
-        text => notes.unshift(text))
+        rawText => {
+            let text = rawText.replace(/[\x00-\x08]/, '')
+            notes.unshift(text)
+        })
     response.status(302)
     response.set('Location', '/notes')
     response.send()
