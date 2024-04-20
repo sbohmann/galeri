@@ -3,9 +3,13 @@ extends layout
 block content
   h1 Notes
   div
-    form(action="/notes/post" method="POST")
-      input#text-input(type="text" name="text")
-      input(type="submit")
+    p
+      form(action="/notes/post" method="POST")
+        input#text-input(type="text" name="text")
+        input(type="submit")
+    p
+      input#imageSelection(type="file" multiple)
+      button#imageUploadButton Upload
   each note in notes
     p
       if (typeof note === 'string')

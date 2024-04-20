@@ -1,6 +1,7 @@
 window.onload = function () {
     const fileSelection = document.getElementById('fileSelection')
     const uploadButton = document.getElementById('uploadButton')
+    const statusLabel = document.getElementById('status')
 
     uploadButton.onclick = function () {
         startUpload(fileSelection.files)
@@ -51,23 +52,25 @@ window.onload = function () {
     function uploadFiles(files, uploadId) {
         let index = 0
 
-        uploadFile()
+        uploadNextFile()
 
-        function uploadFile() {
+        function uploadNextFile() {
             if (index >= files.length) {
                 alert("Successfully uploaded " + files.length + " files.")
                 return
+            } else {
+                statusLabel.textContent = `Uploading image ${index + 1} / ${files.length}`
             }
-            let fileIndex = index++
-            let file = files[fileIndex]
+            let currentIndex = index++
+            let file = files[currentIndex]
             let options = {
                 method: 'POST',
                 body: file
             }
-            fetch(`/upload/file/${uploadId}/${fileIndex}`, options)
+            fetch(`/upload/file/${uploadId}/${currentIndex}`, options)
                 .then(response => {
                     if (response.ok) {
-                        uploadFile(file)
+                        uploadNextFile()
                     }
                 })
         }
