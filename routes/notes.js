@@ -8,6 +8,8 @@ let notes = []
 
 const dataDirectory = 'data'
 const dataFile = path.join(dataDirectory, 'notes')
+const imageDirectory = path.join(dataDirectory, 'images')
+const thumbnailDirectory = path.join(dataDirectory, 'images')
 
 if (!fs.existsSync(dataDirectory)) {
     fs.mkdirSync(dataDirectory)
@@ -18,7 +20,43 @@ if (fs.existsSync(dataFile)) {
     fs.readFileSync(dataFile, 'utf8')
         .split(/\x02|\x02\x03|\x03/)
         .filter(text => text.length > 0)
+        .map(parseNote)
         .forEach(text => notes.unshift(text))
+}
+
+function parseNote(text) {
+    let match = text.match(/^\x01(\w+)\x00(.*)$/)
+    if (match) {
+        let type = match[1]
+        let content = match[2]
+        return parseStructuredNote(type, content)
+    }
+    return text
+}
+
+function parseStructuredNote(type, content) {
+    switch(type) {
+        case 'img':
+            return {
+                type,
+                name: content,
+                fileExtension: fileExtensionForPath(content)
+            }
+        default:
+            return {
+                type,
+                text: content
+            }
+    }
+}
+
+function fileExtensionForPath(path) {
+    let match = path.match(/^.*(\.\w+)$/)
+    if (match) {
+        return match[1]
+    } else {
+        return ''
+    }
 }
 
 router.get('/', function (request, response) {
@@ -33,7 +71,7 @@ function zipWithIndex(input) {
     let result = []
     let index = 0
     for (let element of input) {
-        result.push({ index: index++, text: element})
+        result.push({ index: index++, content: element})
     }
     return result
 }
