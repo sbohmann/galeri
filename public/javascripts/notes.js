@@ -1,6 +1,13 @@
 window.onload = init
 
 function init() {
+    const imageSelection = document.getElementById('imageSelection')
+    const imageUploadButton = document.getElementById('imageUploadButton')
+
+    imageUploadButton.onclick = function () {
+        startUpload(imageSelection.files)
+    }
+
     document
         .getElementById("text-input")
         .focus()
