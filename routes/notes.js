@@ -51,7 +51,7 @@ function parseStructuredNote(type, content) {
 }
 
 function fileExtensionForPath(path) {
-    let match = path.match(/^.*(\.\w+)$/)
+    let match = path.match(/^.*\.([^.]+)$/)
     if (match) {
         return match[1]
     } else {
