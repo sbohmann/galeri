@@ -12,11 +12,11 @@ block content
       button#imageUploadButton Upload
   each note in notes
     p
-      if (typeof note === 'string')
+      if (typeof note.content === 'string')
         button(onclick="copy(" + note.index + ")") 📋
         | &nbsp;
         span(id="note_" + note.index)=note.content
-      else if (note.type === 'img')
+      else if (note.content.type === 'img')
         button(onclick="copyImage(" + note.index + ")") 📋
         | &nbsp;
-        img(id="note_" + note.index src="thumbnails/" + note.index + "." + note.fileExtension)
+        img(id="note_" + note.index src="thumbnails/" + note.index + "." + note.content.fileExtension)
