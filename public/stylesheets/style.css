@@ -36,3 +36,22 @@ image {
   display: inline-block;
   margin: 10px;
 }
+
+.activity-button {
+  min-width: 50px;
+  margin: 5px;
+  padding: 10px;
+  border: solid 2px orange;
+}
+
+.activity-button.pending {
+  background: lightblue;
+}
+
+.activity-button.success {
+  background: lightgreen;
+}
+
+.activity-button.error {
+  background: lightpink;
+}
