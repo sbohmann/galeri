@@ -20,7 +20,7 @@ router.post('/registerEvent', function (request, response) {
             .status(200)
             .send()
     } catch(error) {
-        console.log("Failed to log action")
+        console.log("Failed to log action:", error)
         response
             .status(500)
             .send()
