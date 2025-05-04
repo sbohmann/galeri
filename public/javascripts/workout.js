@@ -12,9 +12,9 @@ function setup() {
     addActivity('SU')
     addActivity('LS')
     addActivity('B')
-    // addMountain('L')
-    // addMountain('K')
-    // addMountain('A')
+    addMountain('L', 250)
+    addMountain('K', 308)
+    // addMountain('A') TODO 400?
 
     function addActivity(code) {
         addCode(code)
@@ -25,6 +25,34 @@ function setup() {
         activityButtons.appendChild(button)
     }
 
+    function addMountain(code, elevation) {
+        addCode(code)
+        let durationTextField = document.createElement('input')
+        durationTextField.type='text'
+        let button = document.createElement('button')
+        button.classList.add('activity-button')
+        button.textContent = code
+        button.onclick = () => {
+            let durationAsText = durationTextField.value.trim()
+            if (/^\d+$/.test(durationAsText)) {
+                registerEvent(
+                    button,
+                    {
+                        code,
+                        type: 'mountain',
+                        elevation,
+                        duration: Number.parseInt(durationAsText)
+                    })
+            } else {
+                alert("Please provide duration")
+            }
+        }
+        let paragraph = document.createElement('p')
+        paragraph.appendChild(durationTextField)
+        paragraph.appendChild(button)
+        activityButtons.appendChild(paragraph)
+    }
+
     function addCode(code) {
         if (codes.has(code)) {
             throw RangeError()
@@ -32,7 +60,7 @@ function setup() {
         codes.add(code)
     }
 
-    async function registerEvent(button, event) {
+    function registerEvent(button, event) {
         notifyBackend(event)
             .then(response => {
                 console.log(response)

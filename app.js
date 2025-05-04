@@ -14,6 +14,7 @@ const uploadRouter = require('./routes/upload')
 const galleryUploadRouter = require('./routes/gallery-upload')
 const createGalleryRouter = require('./routes/gallery');
 const notesRouter = require('./routes/notes')
+const workoutRouter = require('./routes/workout')
 
 const implementation = require('./implementation/core.js')
 
@@ -68,10 +69,9 @@ app.use(function (request, response, next) {
 })
 
 app.use('/upload', uploadRouter)
-
 app.use('/gallery-upload', galleryUploadRouter)
-
 app.use('/notes', notesRouter)
+app.use('/workout', workoutRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
