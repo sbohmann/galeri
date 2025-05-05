@@ -11,9 +11,11 @@ function setup() {
     addActivity('A')
     addActivity('SU')
     addActivity('LS')
-    addActivity('B')
+    addActivity('BM')
+    addActivity('G')
     addMountain('L', 250)
     addMountain('K', 308)
+    addMountain('B', 308)
     // addMountain('A') TODO 400?
 
     function addActivity(code) {
@@ -55,7 +57,7 @@ function setup() {
 
     function addCode(code) {
         if (codes.has(code)) {
-            throw RangeError()
+            alert(`Duplicate code [${code}]`)
         }
         codes.add(code)
     }
