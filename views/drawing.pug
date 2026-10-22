@@ -1,19 +1,20 @@
 extends layout
 
 block content
-  h1 Drawing
-  .drawing-toolbar
-    label(for="strokeColor") Color
-    input#strokeColor(type="color" value="#f6e27f")
-    label(for="strokeWidth") Width
-    input#strokeWidth(type="range" min="1" max="36" value="5")
-    button#undoButton(type="button" title="Undo") Undo
-    button#clearButton(type="button" title="Clear") Clear
-    button#exportButton(type="button" title="Export SVG") Export
-    span#drawingStatus
-  .drawing-frame
-    svg#drawingCanvas(
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 1200 800"
-      preserveAspectRatio="xMidYMid meet"
-    )
+  .drawing-page
+    h1 Drawing
+    .drawing-toolbar
+      label(for="strokeColor") Color
+      input#strokeColor(type="color" value="#f6e27f")
+      label(for="strokeWidth") Width
+      input#strokeWidth(type="range" min="1" max="36" value="5")
+      button#undoButton(type="button" title="Undo") Undo
+      button#clearButton(type="button" title="Clear") Clear
+      button#exportButton(type="button" title="Export SVG") Export
+      span#drawingStatus
+    .drawing-frame
+      svg#drawingCanvas(
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 800"
+        preserveAspectRatio="xMidYMid meet"
+      )
