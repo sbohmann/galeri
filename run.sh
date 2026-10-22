@@ -1,2 +1,2 @@
 #!/bin/sh
-clear && git pull && PORT=5000 DEBUG=galeri:* bin/www 
+clear && git pull && PORT=5000 bin/www
