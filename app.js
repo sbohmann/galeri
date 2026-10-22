@@ -14,7 +14,7 @@ const uploadRouter = require('./routes/upload')
 const galleryUploadRouter = require('./routes/gallery-upload')
 const createGalleryRouter = require('./routes/gallery');
 const notesRouter = require('./routes/notes')
-const workoutRouter = require('./routes/workout')
+const workoutRouter = require('./routes/workout/workout')
 
 const implementation = require('./implementation/core.js')
 
