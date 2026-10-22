@@ -74,6 +74,11 @@ image {
   max-width: 1200px;
   aspect-ratio: 3 / 2;
   background: #111;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+  overscroll-behavior: contain;
 }
 
 #drawingCanvas {
@@ -82,4 +87,8 @@ image {
   height: 100%;
   touch-action: none;
   cursor: crosshair;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }

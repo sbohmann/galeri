@@ -21,15 +21,19 @@ let sendQueue = Promise.resolve()
 
 function init() {
     const canvas = drawingCanvas()
+    const frame = canvas.parentElement
     const exportButton = document.getElementById('exportButton')
     const clearButton = document.getElementById('clearButton')
     const undoButton = document.getElementById('undoButton')
 
-    canvas.addEventListener('pointerdown', startStroke)
-    canvas.addEventListener('pointermove', continueStroke)
-    canvas.addEventListener('pointerup', endStroke)
-    canvas.addEventListener('pointerleave', endStroke)
-    canvas.addEventListener('pointercancel', endStroke)
+    suppressSystemGestures(canvas)
+    suppressSystemGestures(frame)
+
+    canvas.addEventListener('pointerdown', startStroke, { passive: false })
+    canvas.addEventListener('pointermove', continueStroke, { passive: false })
+    canvas.addEventListener('pointerup', endStroke, { passive: false })
+    canvas.addEventListener('pointerleave', endStroke, { passive: false })
+    canvas.addEventListener('pointercancel', endStroke, { passive: false })
 
     exportButton.onclick = exportDrawing
     clearButton.onclick = clearDrawing
@@ -40,6 +44,16 @@ function init() {
 
 function drawingCanvas() {
     return document.getElementById('drawingCanvas')
+}
+
+function suppressSystemGestures(element) {
+    for (let eventName of ['touchstart', 'touchmove', 'touchend', 'contextmenu', 'selectstart', 'dragstart']) {
+        element.addEventListener(eventName, preventDefault, { capture: true, passive: false })
+    }
+}
+
+function preventDefault(event) {
+    event.preventDefault()
 }
 
 function startStroke(event) {
