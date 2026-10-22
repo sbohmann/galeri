@@ -53,7 +53,7 @@ if (fs.existsSync(galleriesPath))
       .forEach(name => app.use('/' + name, createGalleryRouter(name)))
 }
 
-app.use('/dashboard', dashboardRouter);
+app.use('/drawing', drawingRouter)
 
 app.use(function (request, response, next) {
   let userId = request.session.userId
@@ -64,16 +64,19 @@ app.use(function (request, response, next) {
       response.status(401)
       response.send()
     }
+  } else if (userId !== 1) {
+    response.status(403)
+    response.send()
   } else {
     next()
   }
 })
 
+app.use('/dashboard', dashboardRouter);
 app.use('/upload', uploadRouter)
 app.use('/gallery-upload', galleryUploadRouter)
 app.use('/notes', notesRouter)
 app.use('/workout', workoutRouter)
-app.use('/drawing', drawingRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
