@@ -5,7 +5,7 @@ block content
   div
     p
       form(action="/notes/post" method="POST")
-        input#text-input(type="text" name="text")
+        input#text-input(type="text" name="text" autocomplete="off")
         input(type="submit")
     p
       input#imageSelection(type="file" multiple)

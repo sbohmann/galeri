@@ -22,5 +22,4 @@ function copy(index) {
     let text = container.textContent
     navigator.clipboard
         .writeText(text)
-        .then(() => alert("Copied text [" + text + "]"))
 }
