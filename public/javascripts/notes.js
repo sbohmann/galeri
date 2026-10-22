@@ -18,7 +18,7 @@ function init() {
         .focus()
 }
 
-function copy(index) {
+export function copy(index) {
     let container = document.getElementById('note_' + index)
     if (!container) {
         alert("No element found for index " + index)
