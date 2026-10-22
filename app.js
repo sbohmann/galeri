@@ -55,9 +55,11 @@ if (fs.existsSync(galleriesPath))
       .forEach(name => app.use('/' + name, createGalleryRouter(name)))
 }
 
-app.use('/drawing', drawingRouter)
+app.use(requireLogin)
+app.use('/drawing', requireDrawingAccess, drawingRouter)
+app.use(requireRoot)
 
-app.use(function (request, response, next) {
+function requireLogin(request, response, next) {
   let userId = request.session.userId
   if (userId === undefined) { // TODO path-based permission checks, should be optional
     if (request.method === 'GET') {
@@ -66,13 +68,28 @@ app.use(function (request, response, next) {
       response.status(401)
       response.send()
     }
-  } else if (userId !== 1) {
-    response.status(403)
-    response.send()
   } else {
     next()
   }
-})
+}
+
+function requireDrawingAccess(request, response, next) {
+  if (request.session.userId === 1 || request.session.userName === 'drawing') {
+    next()
+  } else {
+    response.status(403)
+    response.send()
+  }
+}
+
+function requireRoot(request, response, next) {
+  if (request.session.userId === 1) {
+    next()
+  } else {
+    response.status(403)
+    response.send()
+  }
+}
 
 app.use('/dashboard', dashboardRouter);
 app.use('/upload', uploadRouter)

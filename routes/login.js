@@ -28,6 +28,7 @@ loginRouter.post('/', function (request, response) {
     let success = (userId) => {
         delayForUserName.set(userName, 0)
         request.session.userId = userId
+        request.session.userName = userName
         response.status(302)
         response.set('Location', returnPath)
         response.send()
