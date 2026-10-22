@@ -6,6 +6,6 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
     if scripts
       each script in scripts
-        script(src='javascripts/' + script)
+        script(src='javascripts/' + script, type='module')
   body
     block content

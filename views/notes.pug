@@ -8,8 +8,10 @@ block content
         input#text-input(type="text" name="text")
         input(type="submit")
     p
-      input#imageSelection(type="file" multiple)
-      button#imageUploadButton Upload
+      input#fileSelection(type="file" multiple)
+      button#fileUploadButton Upload
+  div
+    label#status
   each note in notes
     p
       if (typeof note.content === 'string')

@@ -1,11 +1,16 @@
+import {startUpload} from "./fileUpload.js";
+
 window.onload = init
 
 function init() {
-    const imageSelection = document.getElementById('imageSelection')
-    const imageUploadButton = document.getElementById('imageUploadButton')
+    const fileSelection = document.getElementById('fileSelection')
+    const fileUploadButton = document.getElementById('fileUploadButton')
+    const statusLabel = document.getElementById('status')
 
-    imageUploadButton.onclick = function () {
-        startUpload(imageSelection.files)
+    fileUploadButton.onclick = function () {
+        startUpload(
+            fileSelection.files,
+            message => statusLabel.textContent = message)
     }
 
     document

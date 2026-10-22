@@ -105,4 +105,57 @@ function saveNote(text) {
     fs.appendFileSync(dataFile, `\x02${text}\x03`, 'utf8')
 }
 
+const uploadForId = new Map()
+
+router.post('/catalog', function (request, response) {
+    let catalog = request.body
+    let upload = createUpload(catalog)
+    response.send(upload.id)
+})
+
+function createUpload(catalog) {
+    let id = createUploadId()
+    let upload = {
+        id,
+        catalog
+    }
+    uploadForId.set(id, upload)
+    return upload
+}
+
+function createUploadId() {
+    let id = Date.now()
+    if (uploadForId.has(id)) {
+        throw new RangeError("Duplicate upload ID")
+    }
+    return id.toString()
+}
+
+router.post('/file/:uploadId/:fileIndex', function (request, response) {
+    let uploadId = request.params.uploadId
+    let fileIndex = Number(request.params.fileIndex)
+    let upload = uploadForId.get(uploadId)
+    if (!upload) {
+        throw new RangeError("Unknown upload ID: " + uploadId)
+    }
+    if (!Number.isInteger(fileIndex) || fileIndex < 0 || fileIndex >= upload.catalog.fileNames.length) {
+        throw new RangeError(`File index [${fileIndex}] out of range for upload [${uploadId}] ` +
+            `with catalog size [${upload.catalog.fileNames.length}]`)
+    }
+    let fileEntry = upload.catalog.fileNames[fileIndex]
+    if (fileEntry.index !== fileIndex) {
+        throw new RangeError()
+    }
+    let uploadDirectory = path.join('notes/uploads', uploadId)
+    if (!fs.existsSync(uploadDirectory)) {
+        fs.mkdirSync(uploadDirectory)
+    }
+    let fileStream = fs.createWriteStream(path.join(uploadDirectory, fileEntry.name))
+    request.pipe(fileStream)
+    request.on('end', () => {
+        console.log('end of data')
+        response.send()
+    })
+})
+
 module.exports = router
