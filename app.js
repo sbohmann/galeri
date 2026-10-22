@@ -3,7 +3,6 @@ const express = require('express');
 const session = require('express-session')
 const path = require('path');
 const cookieParser = require('cookie-parser')
-const logger = require('morgan');
 const fs = require("fs");
 
 const { loginRouter, renderLoginPage } = require('./routes/login')
@@ -26,6 +25,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 // app.use(logger('dev'));
+// app.use(logger('dev', {
+//   skip: request => request.method === 'POST' && request.path === '/drawing/event'
+// }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
