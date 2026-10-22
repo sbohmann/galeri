@@ -13,6 +13,12 @@ function init() {
             message => statusLabel.textContent = message)
     }
 
+    for (let button of document.getElementsByClassName("copy-button")) {
+        button.onclick = () => {
+            copy(button.dataset.nodeindex)
+        }
+    }
+
     document
         .getElementById("text-input")
         .focus()
