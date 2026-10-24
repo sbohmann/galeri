@@ -57,7 +57,7 @@ if (fs.existsSync(galleriesPath))
 
 app.use(requireLogin)
 app.use('/drawing', requireDrawingAccess, drawingRouter)
-app.use(requireRoot)
+// app.use(requireRoot)
 
 function requireLogin(request, response, next) {
   let userId = request.session.userId
