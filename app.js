@@ -14,7 +14,7 @@ const galleryUploadRouter = require('./routes/gallery-upload')
 const createGalleryRouter = require('./routes/gallery');
 const notesRouter = require('./routes/notes')
 const workoutRouter = require('./routes/workout/workout')
-const drawingRouter = require('./routes/drawing')
+const vibeDrawingRouter = require('./routes/vibe_drawing')
 
 const implementation = require('./implementation/core.js')
 
@@ -26,7 +26,7 @@ app.set('view engine', 'pug');
 
 // app.use(logger('dev'));
 // app.use(logger('dev', {
-//   skip: request => request.method === 'POST' && request.path === '/drawing/event'
+//   skip: request => request.method === 'POST' && request.path === '/vibe_drawing/event'
 // }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -56,7 +56,7 @@ if (fs.existsSync(galleriesPath))
 }
 
 app.use(requireLogin)
-app.use('/drawing', requireDrawingAccess, drawingRouter)
+app.use('/vibe_drawing', requireDrawingAccess, vibeDrawingRouter)
 app.use(requireRoot)
 
 function requireLogin(request, response, next) {
@@ -74,7 +74,7 @@ function requireLogin(request, response, next) {
 }
 
 function requireDrawingAccess(request, response, next) {
-  if (request.session.userId === 1 || request.session.userName === 'drawing') {
+  if (request.session.userId === 1 || request.session.userName === 'vibe_drawing') {
     next()
   } else {
     response.status(403)
