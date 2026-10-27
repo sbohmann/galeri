@@ -15,9 +15,9 @@ const eventTypes = {
 }
 
 router.get('/', function (request, response) {
-    response.render('drawing', {
+    response.render('vibe_drawing', {
         title: 'Drawing',
-        scripts: ['drawing.js']
+        scripts: ['vibe_drawing.js']
     })
 })
 
@@ -118,7 +118,7 @@ function broadcast(event) {
 }
 
 function sendEvent(client, event) {
-    client.write('event: drawing-event\n')
+    client.write('event: vibe_drawing-event\n')
     client.write('data: ' + JSON.stringify(event) + '\n\n')
 }
 

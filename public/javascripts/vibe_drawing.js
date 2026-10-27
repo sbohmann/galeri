@@ -12,7 +12,7 @@ const eventTypes = {
 
 const clientId = createClientId()
 const remoteStrokes = new Map()
-let drawing = false
+let vibe_drawing = false
 let activePath = null
 let activeStrokeId = 0
 let nextStrokeId = 1
@@ -58,7 +58,7 @@ function preventDefault(event) {
 
 function startStroke(event) {
     event.preventDefault()
-    drawing = true
+    vibe_drawing = true
     activeStrokeId = nextStrokeId++
     points = [svgPointForEvent(event)]
     activePath = document.createElementNS(svgNamespace, 'polyline')
@@ -78,7 +78,7 @@ function startStroke(event) {
 }
 
 function continueStroke(event) {
-    if (!drawing || !activePath) {
+    if (!vibe_drawing || !activePath) {
         return
     }
     event.preventDefault()
@@ -88,11 +88,11 @@ function continueStroke(event) {
 }
 
 function endStroke(event) {
-    if (!drawing) {
+    if (!vibe_drawing) {
         return
     }
     sendEvent(encodeEndStroke(activeStrokeId))
-    drawing = false
+    vibe_drawing = false
     activePath = null
     activeStrokeId = 0
     points = []
@@ -124,7 +124,7 @@ function exportDrawing() {
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
     link.href = url
-    link.download = 'drawing.svg'
+    link.download = 'vibe_drawing.svg'
     document.body.appendChild(link)
     link.click()
     link.remove()
@@ -172,8 +172,8 @@ function createClientId() {
 }
 
 function connectDrawingEvents() {
-    const events = new EventSource('/drawing/events')
-    events.addEventListener('drawing-event', message => {
+    const events = new EventSource('/vibe_drawing/events')
+    events.addEventListener('vibe_drawing-event', message => {
         const event = JSON.parse(message.data)
         if (event.clientId === clientId) {
             return
@@ -186,7 +186,7 @@ function connectDrawingEvents() {
 
 function sendEvent(buffer) {
     sendQueue = sendQueue
-        .then(() => fetch('/drawing/event?clientId=' + encodeURIComponent(clientId), {
+        .then(() => fetch('/vibe_drawing/event?clientId=' + encodeURIComponent(clientId), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/octet-stream'
