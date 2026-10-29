@@ -41,7 +41,7 @@ function init() {
 
     function executeEvent(action) {
         return event => {
-            if (event.pointerType === 'pen') {
+            if (event.pointerType === 'pen' || event.pointerType === 'mouse') {
                 action(event)
             }
         }
