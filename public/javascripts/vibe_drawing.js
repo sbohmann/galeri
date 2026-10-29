@@ -29,11 +29,23 @@ function init() {
     suppressSystemGestures(canvas)
     suppressSystemGestures(frame)
 
-    canvas.addEventListener('pointerdown', startStroke, { passive: false })
-    canvas.addEventListener('pointermove', continueStroke, { passive: false })
-    canvas.addEventListener('pointerup', endStroke, { passive: false })
-    canvas.addEventListener('pointerleave', endStroke, { passive: false })
-    canvas.addEventListener('pointercancel', endStroke, { passive: false })
+    addCanvasEventListener('pointerdown', startStroke)
+    addCanvasEventListener('pointermove', continueStroke)
+    addCanvasEventListener('pointerup', endStroke)
+    addCanvasEventListener('pointerleave', endStroke)
+    addCanvasEventListener('pointercancel', endStroke)
+
+    function addCanvasEventListener(eventName, action) {
+        canvas.addEventListener(eventName, executeEvent(action), { passive: false })
+    }
+
+    function executeEvent(action) {
+        return event => {
+            if (event.pointerType === 'pen') {
+                action(event)
+            }
+        }
+    }
 
     exportButton.onclick = exportDrawing
     clearButton.onclick = clearDrawing
