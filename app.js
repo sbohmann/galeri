@@ -55,9 +55,16 @@ if (fs.existsSync(galleriesPath))
       .forEach(name => app.use('/' + name, createGalleryRouter(name)))
 }
 
+app.use('/dashboard', dashboardRouter);
+
 app.use(requireLogin)
 app.use('/vibe_drawing', requireDrawingAccess, vibeDrawingRouter)
 app.use(requireRoot)
+
+app.use('/upload', uploadRouter)
+app.use('/gallery-upload', galleryUploadRouter)
+app.use('/notes', notesRouter)
+app.use('/workout', workoutRouter)
 
 function requireLogin(request, response, next) {
   let userId = request.session.userId
@@ -90,12 +97,6 @@ function requireRoot(request, response, next) {
     response.send()
   }
 }
-
-app.use('/dashboard', dashboardRouter);
-app.use('/upload', uploadRouter)
-app.use('/gallery-upload', galleryUploadRouter)
-app.use('/notes', notesRouter)
-app.use('/workout', workoutRouter)
 
 // catch 404 and forward to error handler
 app.use(function(request, response, next) {
